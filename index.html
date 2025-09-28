@@ -1,12 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register - Fitness Hub</title>
+  <title>Login - Fitness Hub</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Times New Roman', Times, serif;
       background: linear-gradient(to right, #1e3c72, #2a5298);
       color: white;
       display: flex;
@@ -15,17 +16,28 @@
       height: 100vh;
     }
 
-    .register-box {
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 30px;
-      border-radius: 10px;
-      width: 300px;
-      text-align: center;
+    .blur-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
 
-    h2 {
-      margin-bottom: 20px;
-      color: #00ffcc;
+    .blur-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(20px);
+    }
+
+    .form-container {
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 40px;
+      border-radius: 10px;
+      text-align: center;
+      width: 350px;
     }
 
     input {
@@ -37,8 +49,8 @@
     }
 
     button {
-      background: #00ffcc;
-      color: black;
+      background: #007bff;
+      color: white;
       font-weight: bold;
       padding: 10px;
       border: none;
@@ -48,32 +60,82 @@
     }
 
     button:hover {
-      background: #00cc99;
+      background: #0056b3;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #000;
+    }
+
+    p {
+      color: #000;
     }
   </style>
 </head>
 <body>
-  <div class="register-box">
-    <h2>Register</h2>
-    <form>
-  <input type="text" placeholder="Full Name" required><br>
-  <input type="email" placeholder="Email" required><br>
-  <input type="password" placeholder="Password" required><br>
+  <div class="blur-bg">
+    <img src="Abhishek.jpg" alt="Background Image">
+  </div>
 
-  <!-- Link to Fitness Hub page -->
-  <a href="fitnesshub.html">
-    <button type="button">Register</button>
-  </a>
-</form>
+  <!-- Login Form -->
+  <div class="form-container" id="login-form">
+    <h2>LOGIN</h2>
+    <input type="text" id="username" placeholder="User Name" required><br>
+    <input type="password" id="password" placeholder="Password" required><br>
+    <button onclick="login()">Login</button>
+    <p>Don't have an account? <a href="javascript:void(0)" onclick="showRegister()">Create one</a></p>
+  </div>
 
+  <!-- Register Form (Hidden by default) -->
+  <div class="form-container" id="register-form" style="display:none;">
+    <h2>CREATE ACCOUNT</h2>
+    <input type="text" id="new-username" placeholder="User Name" required><br>
+    <input type="password" id="new-password" placeholder="Password" required><br>
+    <button onclick="createAccount()">Create Account</button>
+    <p>Already have an account? <a href="javascript:void(0)" onclick="showLogin()">Login</a></p>
   </div>
 
   <script>
-    function goToFitnessHub() {
-      window.location.href = "fitnesshub.html"; // after registration redirect
-      return false; // prevent actual form submission
+    let users = [];
+
+    function showRegister() {
+      document.getElementById("login-form").style.display = "none";
+      document.getElementById("register-form").style.display = "block";
+    }
+
+    function showLogin() {
+      document.getElementById("login-form").style.display = "block";
+      document.getElementById("register-form").style.display = "none";
+    }
+
+    // Create new account
+    function createAccount() {
+      const newUsername = document.getElementById("new-username").value.trim();
+      const newPassword = document.getElementById("new-password").value.trim();
+
+      if (newUsername && newPassword) {
+        users.push({ username: newUsername, password: newPassword });
+        alert("Account created successfully! Please login.");
+        showLogin(); // go back to login form
+      } else {
+        alert("Please enter a username and password.");
+      }
+    }
+
+    // Login
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        window.location.href = "fitnesshub.html"; // redirect on success
+      } else {
+        alert("Invalid username or password. Please try again.");
+      }
     }
   </script>
 </body>
 </html>
-
