@@ -1,145 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitness Hub</title>
-    <style>
-        body {
-            font-family: 'Times New Roman', Times, serif, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-image: url('Abhishek.jpg');
-            background-size: cover;
-            color: rgb(255, 255, 255);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fitness Hub</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      background: linear-gradient(to right, #ffffff, #000000);
+      margin: 0;
+      padding: 0;
+      color: rgb(255, 255, 255);
+    }
 
-        /* Style for the navigation menu */
-        .nav-menu {
-            background-color:  rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-            padding: 10px;
-            text-align: center;
-            border-radius: 8px;
-            margin: 20px;
-        }
+    /* Top header */
+    header.top-header {
+      width: 100%;
+      background: rgba(0, 0, 0, 0);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      backdrop-filter: blur(5px);
+      z-index: 10;
+    }
 
-        .nav-menu a {
+    header.top-header h1 {
+      color: black;
+      font-size: 24px;
+      margin: 0;
+    }
 
-            color:mediumturquoise; /* Yellow color for links */
-            margin: 0 15px;
-            text-decoration: none;
-            font-size: 18px;
-        }
+    /* Profile Dropdown */
+    .profile-container {
+  position: absolute;   /* or fixed, depending on your layout */
+  top: 5px;            /* move it down */
+  right: 70px;          /* move it left from the corner */
+  display: inline-block;
+}
 
-        .nav-menu a:hover {
-            text-decoration: underline;
-        }
 
-        header {
-            background-color:  rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            text-align: center;
-            border-radius: 8px;
-            margin: 20px;
-        }
+    .profile-pic {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      border: 2px solid #007bff;
+      cursor: pointer;
+    }
 
-        div{
-            background-color:  rgba(0, 0, 0, 0.5);
-        }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      background: rgba(255, 255, 255, 0.457);
+      color: black;
+      min-width: 250px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      margin-top: 10px;
+      overflow: hidden;
+      z-index: 1000;
+    }
 
-        h1 {
-            color:rgb(0, 255, 166);
-            margin: 0;
-        }
+    .dropdown-menu.active {
+      display: block;
+    }
 
-        h2 {
-            color:rgb(255, 0, 247);
-            margin: 0;
-        }
+    .dropdown-header {
+      background: #007bff;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
 
-        marquee {
-            font-size: 24px;
-            color: rgb(0, 255, 247); /* red color for marquee text */
-            padding: 10px 0;
-        }
+    .dropdown-header h6 {
+      margin: 5px 0 0;
+    }
 
-        .menu-card {
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent section background */
-            padding: 20px;
-            margin: 20px;
-            border-radius: 8px;
-        }
+    .dropdown-header small {
+      color: #e0e0e0;
+    }
 
-        .fitness-plan {
-            border: 2px solid #ffeb3b; /* yellow border for fitness plans */
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px 0;
-        }
+    .dropdown-content {
+      padding: 10px 20px;
+    }
 
-        .combo-offer {
-            background-color: rgba(255, 255, 255, 0.1); /* Light transparent background for combo offers */
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-        }
-    </style>
+    .dropdown-content a {
+      color: #000;
+      text-decoration: none;
+      display: block;
+      padding: 8px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .dropdown-content a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-content a:hover {
+      color: #007bff;
+    }
+
+    .signout-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-weight: bold;
+      border-radius: 0 0 10px 10px;
+      cursor: pointer;
+    }
+
+    .signout-btn:hover {
+      background: #0056b3;
+    }
+
+    /* Main content */
+    .blur-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 180%;
+      z-index: -1;
+    }
+
+    .blur-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(10px);
+    }
+
+    .nav-menu {
+      font-family: 'Courier New', Courier, monospace;
+      text-align: center;
+      margin-top: 120px;
+    }
+
+    .nav-menu a {
+      color: rgb(232, 238, 242);
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 20px;
+    }
+
+    .nav-menu a:hover {
+      text-decoration: underline;
+    }
+
+    .nav-menu1 {
+      text-align: center;
+      padding: 10px;
+    }
+
+    .nav-menu1 a {
+      color: rgb(46, 248, 6);
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 20px;
+    }
+
+    .nav-menu1 a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      color: rgb(255, 94, 0);
+      margin-top: 10px;
+      font-size: 58px;
+      text-align: center;
+    }
+
+    h2 {
+      color: rgb(0, 217, 255);
+      text-align: center;
+    }
+
+    .menu-card {
+      background-color: rgba(0, 0, 0, 0);
+      padding: 20px;
+      margin: 20px;
+      border-radius: 8px;
+    }
+
+    .fitness-plan,
+    .combo-offer {
+      border: 2px solid #ffeb3b;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
+  </style>
 </head>
 <body>
 
+  <!-- Header -->
+  <header class="top-header">
 
-    <!-- Navigation Menu -->
-    <div class="nav-menu">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#plans">Plans</a>
-        <a href="#contacts">Contacts</a>
+    <div class="profile-container">
+      <img
+        alt="Profile"
+        class="profile-pic"
+        id="profilePic"
+      />
+
+      <div class="dropdown-menu" id="profileDropdown">
+        <div class="dropdown-header">
+          <h6 id="userName"></h6>
+          <small id="userEmail"></small><br/>
+          <small id="userPhone"></small>
+        </div>
+
+
+        <button class="signout-btn" onclick="logout()">Sign Out</button>
+      </div>
     </div>
+  </header>
 
-    <header>
-        <h1>Welcome to Fitness Hub</h1>
-        <marquee behavior="scroll" direction="left">Join us for the best fitness tips and workout plans!</marquee>
-        
-        <div class="nav-menu">
-        <a href="#fitness-plan">Fitness Plans</a>
-        <a href="#combo-offer">Combo Offers</a>
-        </div>
-    
-    </header>
+  <div class="blur-bg">
+    <img src="Abhishek1.jpg" alt="Background Image">
+  </div>
 
-    <section class="menu-card">
-        <section id="fitness-plan"></section>
-        <h2>Fitness Plans</h2>
-        <div class="fitness-plan">
-            <h3>Beginner Plan</h3>
-            <p>Perfect for those just starting out. Includes basic exercises and routines.</p>
-            <p>Price: 1000</p>
-        </div>
-        <div class="fitness-plan">
-            <h3>Intermediate Plan</h3>
-            <p>For those who have some experience and want to take it to the next level.</p>
-            <p>Price: 3000</p>
-        </div>
-        <div class="fitness-plan">
-            <h3>Advanced Plan</h3>
-            <p>Challenging routines for seasoned fitness enthusiasts.</p>
-            <p>Price: 5000</p>
-        </div>
-    </section>
+  <div class="nav-menu">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#plans">Plans</a>
+    <a href="#contacts">Contacts</a>
+  </div>
 
-    <section class="menu-card">
-        <section id="combo-offer"></section>
-        <h2>Combo Offers</h2>
-        <div class="combo-offer">
-            <h3>Combo Plan 1</h3>
-            <p>Includes Beginner + Intermediate Plans at a discounted price.</p>
-            <p>Price: 3500</p>
-        </div>
-        <div class="combo-offer">
-            <h3>Combo Plan 2</h3>
-            <p>Includes Intermediate + Advanced Plans at a discounted price.</p>
-            <p>Price: 7000</p>
-        </div>
-    </section>
+  <div class="nav-menu1">
+    <a href="#fitness-plan">Fitness Plans</a>
+    <a href="#combo-offer">Combo Offers</a>
+  </div>
+
+  <h1>Welcome to Fitness Hub</h1>
+  <h2><u>Join us for the best fitness tips and workout plans!</u></h2>
+
+  <section class="menu-card" id="fitness-plan">
+    <h2>Fitness Plans</h2>
+    <div class="fitness-plan">
+      <h3>Beginner Plan</h3>
+      <p>Perfect for those just starting out. Includes basic exercises and routines.</p>
+      <p>Price: 1000</p>
+    </div>
+    <div class="fitness-plan">
+      <h3>Intermediate Plan</h3>
+      <p>For those who have some experience and want to take it to the next level.</p>
+      <p>Price: 3000</p>
+    </div>
+    <div class="fitness-plan">
+      <h3>Advanced Plan</h3>
+      <p>Challenging routines for seasoned fitness enthusiasts.</p>
+      <p>Price: 5000</p>
+    </div>
+  </section>
+
+  <section class="menu-card" id="combo-offer">
+    <h2>Combo Offers</h2>
+    <div class="combo-offer">
+      <h3>Combo Plan 1</h3>
+      <p>Includes Beginner + Intermediate Plans at a discounted price.</p>
+      <p>Price: 3500</p>
+    </div>
+    <div class="combo-offer">
+      <h3>Combo Plan 2</h3>
+      <p>Includes Intermediate + Advanced Plans at a discounted price.</p>
+      <p>Price: 7000</p>
+    </div>
+  </section>
+
+  <script>
+    const profilePic = document.getElementById("profilePic");
+    const dropdown = document.getElementById("profileDropdown");
+
+    profilePic.addEventListener("click", () => {
+      dropdown.classList.toggle("active");
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener("click", (event) => {
+      if (!profilePic.contains(event.target) && !dropdown.contains(event.target)) {
+        dropdown.classList.remove("active");
+      }
+    });
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      alert("You have been logged out!");
+      window.location.href = "index.html";
+    }
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+  if (loggedInUser) {
+    document.getElementById("userName").textContent = loggedInUser.name;
+    document.getElementById("userEmail").textContent = loggedInUser.email;
+    document.getElementById("userPhone").textContent = loggedInUser.phone;
+  } else {
+    // If user opens this page without login
+    window.location.href = "index.html";
+  }
+
+  </script>
 </body>
 </html>
